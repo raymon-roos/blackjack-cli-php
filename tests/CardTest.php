@@ -8,9 +8,7 @@ final class CardTest extends MockeryTestCase
 {
 	public function testCardCanShow(): void
 	{
-		$card = new Card();
-		$card->suit = '♠';
-		$card->value = 5;
+		$card = new Card(Suit::spades, Value::five);
 
 		$this->assertSame('♠ 5', $card->show());
 	}
