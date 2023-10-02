@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 require_once('vendor/autoload.php');
 
-$card = new Card(Suit::spades, Value::jack);
+$player = new Player('Ada Lovelace');
+$deck = new Deck();
 
-echo $card->show() . PHP_EOL;
+$player->addCard($deck->drawCard());
+$player->addCard($deck->drawCard());
+$player->addCard($deck->drawCard());
 
-// Throws an error
-// $card = new Card('schoffels', 13);
+echo $player->showHand() . PHP_EOL;
