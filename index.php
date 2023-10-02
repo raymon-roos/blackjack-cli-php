@@ -6,7 +6,14 @@ require_once('vendor/autoload.php');
 
 $card = new Card();
 
-$card->suit = 'clubs';
+$card->suit = '♠';
 $card->value = 'jack';
+echo $card->show() . PHP_EOL;
 
-dd($card);
+$card->suit = '♦';
+$card->value = 'jack';
+echo $card->show() . PHP_EOL;
+
+$card->suit = '♦';
+$card->value = 5;
+echo $card->show() . PHP_EOL;
