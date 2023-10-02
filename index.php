@@ -9,4 +9,4 @@ $card = new Card('spades', 'jack');
 echo $card->show() . PHP_EOL;
 
 // Throws an error
-// $card = new Card('schoffels', 13);
+$card = new Card('schoffels', 13);
