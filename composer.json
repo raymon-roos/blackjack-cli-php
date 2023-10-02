@@ -4,10 +4,9 @@
   "type": "project",
   "autoload": {
     "files": [
-      "./src/utils.php"
     ],
     "psr-4": {
-      "": "./src"
+      "": ""
     }
   },
   "require-dev": {
