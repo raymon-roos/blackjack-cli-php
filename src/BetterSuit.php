@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-enum Suit: string
+enum BetterSuit: string
 {
 	case clubs    = '♣';
 	case diamonds = '♦';

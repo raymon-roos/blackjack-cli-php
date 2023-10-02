@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class Card
+class BetterCard
 {
 	private Suit $suit;
 	private Value $value;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-enum Value: string
+enum BetterValue: string
 {
 	case ace   = 'A';
 	case two   = '2';

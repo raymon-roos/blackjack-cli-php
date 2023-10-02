@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once('vendor/autoload.php');
 
-$card = new Card(Suit::spades, Value::jack);
+$card = new Card('spades', 'jack');
 
 echo $card->show() . PHP_EOL;
 

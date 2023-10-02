@@ -7,7 +7,7 @@
       "./src/utils.php"
     ],
     "psr-4": {
-      "": "./src"
+      "": ""
     }
   },
   "require-dev": {
