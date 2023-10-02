@@ -1,0 +1,25 @@
+{
+  "name": "ray/oop-intro-blackjack",
+  "description": "'Bit Academy php oop exercise, module oop-intro, level 5'",
+  "type": "project",
+  "autoload": {
+    "files": [
+      "utils.php"
+    ],
+    "psr-4": {
+      "": ""
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.3",
+    "mockery/mockery": "^1.6"
+  },
+  "license": "gplv3",
+  "authors": [
+    {
+      "name": "Raymon Roos",
+      "email": "raymon.roos@hotmail.com"
+    }
+  ],
+  "require": {}
+}
