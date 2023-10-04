@@ -24,4 +24,15 @@ final class CardTest extends MockeryTestCase
 
 		$this->assertSame('♠ 5', $card->show());
 	}
+
+	public function testCanAddUpScores(): void
+	{
+		$aceOfClubs = new Card(Suit::clubs, Rank::ace);
+		$queenOfHearts = new Card(Suit::hearts, Rank::queen);
+
+		$this->assertEquals(
+			21,
+			$aceOfClubs->getScore() + $queenOfHearts->getScore()
+		);
+	}
 }

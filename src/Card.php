@@ -28,4 +28,9 @@ class Card
 	{
 		return "{$this->suit->value} {$this->rank->value}";
 	}
+
+	public function getScore(): int
+	{
+		return $this->rank->getWorth();
+	}
 }
