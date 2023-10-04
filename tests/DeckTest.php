@@ -4,37 +4,22 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\Card;
 use App\Deck;
-use App\Suit;
-use App\Value;
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use RangeException;
 
 final class DeckTest extends MockeryTestCase
 {
-	public function testThrowsAfter52CardsDealt(): void
+	public function testDeals52UniqueCardsThenThrows(): void
 	{
-		$this->expectException('RangeException');
-
 		$deck = new Deck();
 
-		while (true) {
-			$cards[] = $deck->drawCard();
-		}
-
-		$this->assertSame(
-			52,
-			count($cards)
+		$this->expectExceptionObject(
+			new RangeException('All out of cards')
 		);
-	}
-
-	public function testDeckHasUniqueCardsOnly(): void
-	{
-		$deck = new Deck();
 
 		$cards = [];
-		for ($i = 0; $i <= 51; $i++) {
+		while (true) {
 			$nextCard = $deck->drawCard();
 
 			foreach ($cards as $previousCard) {
