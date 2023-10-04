@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use RangeException;
+
 class Deck
 {
 	private array $cards = [];
@@ -20,7 +22,7 @@ class Deck
 	public function drawCard(): Card
 	{
 		if (empty($this->cards)) {
-			throw new Exception('All out of cards');
+			throw new RangeException('All out of cards');
 		}
 
 		$index = array_rand($this->cards);
