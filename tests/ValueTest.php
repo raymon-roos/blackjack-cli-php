@@ -10,8 +10,8 @@ final class ValueTest extends MockeryTestCase
 	public function testCanAddUpScores(): void
 	{
 		$this->assertEquals(
-			Value::four->getWorth() + Value::ace->getWorth(),
-			5
+			5,
+			Value::four->getWorth() + Value::ace->getWorth()
 		);
 	}
 }
