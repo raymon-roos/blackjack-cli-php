@@ -13,8 +13,8 @@ class Deck
 	public function __construct()
 	{
 		foreach (Suit::cases() as $suit) {
-			foreach (Value::cases() as $value) {
-				$this->cards[] = new Card($suit, $value);
+			foreach (Rank::cases() as $rank) {
+				$this->cards[] = new Card($suit, $rank);
 			}
 		}
 	}

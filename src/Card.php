@@ -7,25 +7,25 @@ namespace App;
 class Card
 {
 	private Suit $suit;
-	private Value $value;
+	private Rank $rank;
 
 	public function __construct(
 		string|Suit $suit,
-		int|string|Value $value
+		int|string|Rank $rank
 	) {
 		$this->suit = match (gettype($suit)) {
 			'string' => Suit::fromString($suit),
 			'object' => $suit
 		};
 
-		$this->value = match (gettype($value)) {
-			'string', 'integer' => Value::from("$value"),
-			'object' => $value
+		$this->rank = match (gettype($rank)) {
+			'string', 'integer' => Rank::from("$rank"),
+			'object' => $rank
 		};
 	}
 
 	public function show(): string
 	{
-		return "{$this->suit->value} {$this->value->value}";
+		return "{$this->suit->value} {$this->rank->value}";
 	}
 }

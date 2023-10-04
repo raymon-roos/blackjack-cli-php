@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
-enum Value: string
+enum Rank: string
 {
-	case ace   = 'A';
 	case two   = '2';
 	case three = '3';
 	case four  = '4';
@@ -19,15 +18,14 @@ enum Value: string
 	case jack  = 'J';
 	case queen = 'Q';
 	case king  = 'K';
+	case ace   = 'A';
 
 	public function getWorth(): int
 	{
-		return match (true) {
-			is_numeric($this->value) => (int) $this->value,
-			$this->value === 'A' => 1,
-			$this->value === 'J' => 11,
-			$this->value === 'Q' => 12,
-			$this->value === 'K' => 13,
+		return match ($this) {
+			self::ace => 11,
+			self::jack, self::queen, self::king => 10,
+			default => (int) $this->value,
 		};
 	}
 }
