@@ -17,4 +17,11 @@ final class CardTest extends MockeryTestCase
 
 		$this->assertSame('♠ 5', $card->show());
 	}
+
+	public function testCanMakeCardFromPrimitives(): void
+	{
+		$card = new Card('spades', 5);
+
+		$this->assertSame('♠ 5', $card->show());
+	}
 }
