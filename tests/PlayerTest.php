@@ -10,7 +10,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class PlayerTest extends MockeryTestCase
 {
-	public function testCanReceiveCards(): void
+	public function testCanReceiveAndShowCards(): void
 	{
 		$mockCard = Mockery::mock('App\Card');
 		$mockCard->shouldReceive('show')
