@@ -8,6 +8,9 @@ use RangeException;
 
 class Deck
 {
+	/**
+	 * @property Card[] $cards
+	 */
 	private array $cards = [];
 
 	public function __construct()
