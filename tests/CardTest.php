@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Tests;
+
+use App\Card;
+use App\Suit;
+use App\Value;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class CardTest extends MockeryTestCase

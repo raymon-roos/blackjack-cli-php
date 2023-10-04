@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace Tests;
+
+use App\Suit;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class SuitTest extends MockeryTestCase

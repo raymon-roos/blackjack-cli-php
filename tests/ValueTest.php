@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Value;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class ValueTest extends MockeryTestCase
