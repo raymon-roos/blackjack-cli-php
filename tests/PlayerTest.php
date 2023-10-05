@@ -10,51 +10,42 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class PlayerTest extends MockeryTestCase
 {
+	private function getPlayerWith3Quens()
+	{
+		$player = new Player('Ada Lovelace');
+
+		for ($i = 0; $i < 3; $i++) {
+			$mockCard = Mockery::mock('App\Card');
+			$mockCard->shouldReceive([
+				'show' => '♥ Q',
+				'getScore' => 10,
+			]);
+
+			$player
+				->addCard($cards[] = $mockCard);
+		}
+
+		return $player;
+	}
+
 	public function testCanReceiveAndShowCards(): void
 	{
-		$mockCard = Mockery::mock('App\Card');
-		$mockCard->shouldReceive([
-			'show' => '♥ Q',
-			'getScore' => 10,
-		]);
+		$player = $this->getPlayerWith3Quens();
 
-		$player = new Player('test');
-
-		$player->addCard($mockCard);
-
-		$this->assertEquals(
-			'test has ♥ Q',
-			$player->showHand(),
-		);
+		$this->assertEquals('Ada Lovelace has ♥ Q ♥ Q ♥ Q', $player->showHand());
 	}
 
 	public function testCanCalculateHandScore(): void
 	{
-		$player = new Player('test');
+		$player = $this->getPlayerWith3Quens();
 
-		$mockCard = Mockery::mock('App\Card');
-		$mockCard->shouldReceive('getScore')
-			->andReturn(11);
-		$player->addCard($mockCard);
-
-		$mockCard = Mockery::mock('App\Card');
-		$mockCard->shouldReceive('getScore')
-			->andReturn(5);
-		$player->addCard($mockCard);
-
-		$this->assertEquals(
-			16,
-			$player->getHandScore(),
-		);
+		$this->assertEquals(30, $player->getHandScore(),);
 	}
 
 	public function testHasName(): void
 	{
 		$player = new Player('Ada Lovelace');
 
-		$this->assertEquals(
-			'Ada Lovelace',
-			$player->getName(),
-		);
+		$this->assertEquals('Ada Lovelace', $player->getName());
 	}
 }
