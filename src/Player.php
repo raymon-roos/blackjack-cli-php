@@ -7,6 +7,7 @@ namespace App;
 class Player
 {
 	private array $hand = [];
+	private int $score = 0;
 
 	public function __construct(private string $name)
 	{
@@ -15,15 +16,22 @@ class Player
 	public function addCard(Card $card): void
 	{
 		$this->hand[] = $card;
+		$this->score += $card->getScore();
 	}
 
 	public function showHand(): string
 	{
 		$output = "{$this->name} has";
-		array_walk($this->hand, static function (Card $card) use (&$output) {
+
+		foreach ($this->hand as $card) {
 			$output = "$output {$card->show()}";
-		});
+		}
 
 		return $output;
+	}
+
+	public function getHandScore(): int
+	{
+		return $this->score;
 	}
 }
