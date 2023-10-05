@@ -7,11 +7,14 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class RankTest extends MockeryTestCase
 {
-	public function testCanAddUpScores(): void
+	public function testValuesAreCorrect()
 	{
 		$this->assertEquals(
-			15,
-			Rank::four->getWorth() + Rank::ace->getWorth()
+			95,
+			array_reduce(
+				Rank::cases(),
+				fn (?int $carry, Rank $item, int $initial = 0): int => $carry += $item->getWorth()
+			)
 		);
 	}
 }
