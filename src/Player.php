@@ -35,6 +35,11 @@ class Player
 		return $this->score;
 	}
 
+	public function getHandCount(): int
+	{
+		return count($this->hand);
+	}
+
 	public function getName(): string
 	{
 		return $this->name;

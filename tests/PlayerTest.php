@@ -42,6 +42,13 @@ final class PlayerTest extends MockeryTestCase
 		$this->assertEquals(30, $player->getHandScore(),);
 	}
 
+	public function testCanCountCardsInHand(): void
+	{
+		$player = $this->getPlayerWith3Quens();
+
+		$this->assertEquals(3, $player->getHandCount());
+	}
+
 	public function testHasName(): void
 	{
 		$player = new Player('Ada Lovelace');
