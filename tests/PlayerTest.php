@@ -47,4 +47,14 @@ final class PlayerTest extends MockeryTestCase
 			$player->getHandScore(),
 		);
 	}
+
+	public function testHasName(): void
+	{
+		$player = new Player('Ada Lovelace');
+
+		$this->assertEquals(
+			'Ada Lovelace',
+			$player->getName(),
+		);
+	}
 }

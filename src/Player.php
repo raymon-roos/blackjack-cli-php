@@ -34,4 +34,9 @@ class Player
 	{
 		return $this->score;
 	}
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
 }
