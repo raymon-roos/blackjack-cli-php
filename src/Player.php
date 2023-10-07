@@ -54,6 +54,8 @@ class Player
 		if (!is_null($this->state)) {
 			return "{$this->name} {$this->state->getFormattedState()}";
 		}
+
+		return null;
 	}
 
 	public function isGameOver(): bool
