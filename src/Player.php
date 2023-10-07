@@ -49,9 +49,11 @@ class Player
 		$this->state = EndState::folded;
 	}
 
-	public function getState(): ?string
+	public function showState(): ?string
 	{
-		return $this->state?->value;
+		if (!is_null($this->state)) {
+			return "{$this->name} {$this->state->getFormattedState()}";
+		}
 	}
 
 	public function isGameOver(): bool

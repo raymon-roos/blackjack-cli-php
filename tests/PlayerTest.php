@@ -49,7 +49,7 @@ final class PlayerTest extends MockeryTestCase
 		$player = new Player('Ada Lovelace');
 		$player->fold();
 
-		$this->assertEquals('folded', $player->getState());
+		$this->assertEquals('Ada Lovelace has folded', $player->showState());
 	}
 
 	public function testHasName(): void

@@ -36,4 +36,13 @@ enum EndState: string
 			default             => throw new InvalidArgumentException("$state is not a valid end state")
 		};
 	}
+
+	public function getFormattedState(): string
+	{
+		return match ($this) {
+			self::busted => 'is ',
+			default => 'has ',
+		}
+			. $this->value;
+	}
 }

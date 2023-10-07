@@ -36,4 +36,28 @@ final class EndStateTest extends MockeryTestCase
 
 		EndState::fromString('test');
 	}
+
+	public function testCanGetFormattedState(): void
+	{
+		$this->assertEquals(
+			'is ' . EndState::busted->value,
+			EndState::busted->getFormattedState()
+		);
+		$this->assertEquals(
+			'has ' . EndState::five_card_charlie->value,
+			EndState::five_card_charlie->getFormattedState()
+		);
+		$this->assertEquals(
+			'has ' . EndState::twenty_one->value,
+			EndState::twenty_one->getFormattedState()
+		);
+		$this->assertEquals(
+			'has ' . EndState::blackjack->value,
+			EndState::blackjack->getFormattedState()
+		);
+		$this->assertEquals(
+			'has ' . EndState::folded->value,
+			EndState::folded->getFormattedState()
+		);
+	}
 }
