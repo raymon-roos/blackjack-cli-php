@@ -31,7 +31,7 @@ final class PlayerTest extends MockeryTestCase
 	{
 		$player = $this->getPlayerWith3Quens();
 
-		$this->assertEquals(30, $player->getHandScore(),);
+		$this->assertEquals(30, $player->getHandScore());
 	}
 
 	public function testCanReceiveAndShowCards(): void
@@ -46,16 +46,16 @@ final class PlayerTest extends MockeryTestCase
 
 	public function testCanFold(): void
 	{
-		$player = new Player('Ada Lovelace');
+		$player = new Player('Grace Murray Hopper');
 		$player->fold();
 
-		$this->assertEquals('Ada Lovelace has folded', $player->showState());
+		$this->assertEquals('Grace Murray Hopper has folded', $player->showState());
 	}
 
 	public function testHasName(): void
 	{
-		$player = new Player('Ada Lovelace');
+		$player = new Player('Radia Perlman');
 
-		$this->assertEquals('Ada Lovelace', $player->getName());
+		$this->assertEquals('Radia Perlman', $player->getName());
 	}
 }
