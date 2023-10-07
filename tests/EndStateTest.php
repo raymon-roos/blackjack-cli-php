@@ -25,6 +25,7 @@ final class EndStateTest extends MockeryTestCase
 		$this->assertEquals(EndState::five_card_charlie, EndState::fromString('five-card-charlie'));
 		$this->assertEquals(EndState::twenty_one, EndState::fromString('twenty-ony'));
 		$this->assertEquals(EndState::blackjack, EndState::fromString('blackjack'));
+		$this->assertEquals(EndState::folded, EndState::fromString('folded'));
 	}
 
 	public function testThrowsOnInvalidArgument(): void
