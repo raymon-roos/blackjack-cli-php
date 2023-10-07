@@ -9,12 +9,10 @@ final class RankTest extends MockeryTestCase
 {
 	public function testValuesAreCorrect()
 	{
-		$this->assertEquals(
-			95,
-			array_reduce(
-				Rank::cases(),
-				fn (?int $carry, Rank $item, int $initial = 0): int => $carry += $item->getWorth()
-			)
-		);
+		foreach (Rank::cases() as $rank) {
+			$totalValue = ($totalValue ??= 0) + $rank->getWorth();
+		}
+
+		$this->assertEquals(95, $totalValue);
 	}
 }
