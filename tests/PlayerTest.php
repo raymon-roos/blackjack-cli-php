@@ -21,18 +21,10 @@ final class PlayerTest extends MockeryTestCase
 				'getScore' => 10,
 			]);
 
-			$player
-				->addCard($cards[] = $mockCard);
+			$player->addCard($mockCard);
 		}
 
 		return $player;
-	}
-
-	public function testCanReceiveAndShowCards(): void
-	{
-		$player = $this->getPlayerWith3Quens();
-
-		$this->assertEquals('Ada Lovelace has ♥ Q ♥ Q ♥ Q', $player->showHand());
 	}
 
 	public function testCanCalculateHandScore(): void
@@ -42,11 +34,22 @@ final class PlayerTest extends MockeryTestCase
 		$this->assertEquals(30, $player->getHandScore(),);
 	}
 
-	public function testCanCountCardsInHand(): void
+	public function testCanReceiveAndShowCards(): void
 	{
 		$player = $this->getPlayerWith3Quens();
 
-		$this->assertEquals(3, $player->getHandCount());
+		$this->assertEquals(
+			'Ada Lovelace has ♥ Q ♥ Q ♥ Q (30)',
+			$player->showHand()
+		);
+	}
+
+	public function testCanFold(): void
+	{
+		$player = new Player('Ada Lovelace');
+		$player->fold();
+
+		$this->assertEquals('folded', $player->getState());
 	}
 
 	public function testHasName(): void
