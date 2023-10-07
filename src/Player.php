@@ -9,7 +9,7 @@ class Player
 	private array $hand = [];
 	private int $score = 0;
 	private ?EndState $state;
-	private bool $gameOver = false;
+	private bool $isFinished = false;
 
 	public function __construct(private string $name)
 	{
@@ -25,7 +25,7 @@ class Player
 		$this->hand[] = $card;
 		$this->score += $card->getScore();
 		$this->state = EndState::tryFromHandScore($this->score, count($this->hand));
-		$this->gameOver = !is_null($this->state);
+		$this->isFinished = !is_null($this->state);
 	}
 
 	public function showHand(): string
@@ -58,8 +58,8 @@ class Player
 		return null;
 	}
 
-	public function isGameOver(): bool
+	public function isFinished(): bool
 	{
-		return $this->gameOver;
+		return $this->isFinished;
 	}
 }
