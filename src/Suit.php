@@ -20,7 +20,7 @@ enum Suit: string
 			'diamonds', 'd', 'D', '♦' => self::diamonds,
 			'hearts', 'h', 'H', '♥' => self::hearts,
 			'spades', 's', 'S', '♠' => self::spades,
-			default => throw new InvalidArgumentException('Invalid argument')
+			default => throw new InvalidArgumentException("$suit is not a valid suit")
 		};
 	}
 }
