@@ -10,7 +10,7 @@ enum EndState: string
 {
 	case busted = 'Busted!';
 	case five_card_charlie = 'Five-Card-Charlie!';
-	case twenty_one = 'Twenty-one!';
+	case twenty_one = 'Twenty-One!';
 	case blackjack = 'Blackjack!';
 	case folded = 'folded';
 
