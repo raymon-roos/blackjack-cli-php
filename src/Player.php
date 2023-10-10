@@ -11,13 +11,8 @@ class Player
 	private ?EndState $state;
 	private bool $isFinished = false;
 
-	public function __construct(private string $name)
+	public function __construct(public readonly string $name)
 	{
-	}
-
-	public function getName(): string
-	{
-		return $this->name;
 	}
 
 	public function addCard(Card $card): void

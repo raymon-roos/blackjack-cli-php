@@ -75,7 +75,7 @@ class Blackjack
 
 	private function processPlayerTurn(Player $player): void
 	{
-		echo PHP_EOL . "Your turn {$player->getName()}" . PHP_EOL;
+		echo PHP_EOL . "Your turn {$player->name}" . PHP_EOL;
 		echo $player->showHand() . PHP_EOL;
 
 		while (!$player->isFinished()) {
@@ -103,7 +103,7 @@ class Blackjack
 
 		echo <<<OUTPUT
 
-		Of all players that chose to stand, {$topPlayer->getName()} got closest to 21,
+		Of all players that chose to stand, {$topPlayer->name} got closest to 21,
 		{$topPlayer->showHand()}
 		
 		OUTPUT;

@@ -32,7 +32,6 @@ final class BlackjackTest extends MockeryTestCase
 
 		$mockPlayer = Mockery::mock('App\Player');
 		$mockPlayer->shouldReceive([
-			'getName' => 'Katherine Johnson',
 			'addCard' => null,
 			'stand' => null,
 			'isFinished' => false,

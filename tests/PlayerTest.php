@@ -56,6 +56,6 @@ final class PlayerTest extends MockeryTestCase
 	{
 		$player = new Player('Radia Perlman');
 
-		$this->assertEquals('Radia Perlman', $player->getName());
+		$this->assertEquals('Radia Perlman', $player->name);
 	}
 }
