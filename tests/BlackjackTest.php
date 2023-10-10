@@ -23,7 +23,7 @@ final class BlackjackTest extends MockeryTestCase
 		new Blackjack(players: []);
 	}
 
-	public function testPlayersCanFold(): void
+	public function testPlayerscanStand(): void
 	{
 		$mockPrompter = Mockery::mock('App\UserPrompter');
 		$mockPrompter->shouldReceive([
@@ -34,9 +34,9 @@ final class BlackjackTest extends MockeryTestCase
 		$mockPlayer->shouldReceive([
 			'getName' => 'Katherine Johnson',
 			'addCard' => null,
-			'fold' => null,
+			'stand' => null,
 			'isFinished' => false,
-			'showState'  => 'Katherine Johnson has folded',
+			'showState'  => 'Katherine Johnson stands',
 			'showHand' => 'Katherine Johnson has ♥ 9001',
 		]);
 
@@ -46,7 +46,7 @@ final class BlackjackTest extends MockeryTestCase
 		$this->expectOutputRegex('/.*Welcome!.*/');
 		$this->expectOutputRegex('/.*Katherine Johnson has ♥ 9001.*/');
 		$this->expectOutputRegex('/.*Your turn Katherine Johnson.*/');
-		$this->expectOutputRegex('/.*Katherine Johnson has folded.*/');
+		$this->expectOutputRegex('/.*Katherine Johnson stands.*/');
 	}
 
 	public function testPlayersCanGetBusted(): void

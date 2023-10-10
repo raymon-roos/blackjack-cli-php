@@ -51,17 +51,17 @@ class Blackjack
 			}
 		}
 
-		$foldedPlayers = array_filter(
+		$standingPlayers = array_filter(
 			$this->players,
-			fn (Player $player) => $player->showState() === 'folded'
+			fn (Player $player) => $player->showState() === 'stands'
 		);
 
-		// If more than one player folded, find
+		// If more than one player stands, find
 		// the player with a score closest to 21
-		if (count($foldedPlayers) >= 2) {
-			$this->processFoldedPlayers($foldedPlayers);
-		}
-	}
+		if (count($standingPlayers) >= 2) {
+			$this->processStandingPlayers($standingPlayers);
+        }
+    }
 
 	private function dealFirstHand(): void
 	{
@@ -80,7 +80,7 @@ class Blackjack
 
 		while (!$player->isFinished()) {
 			if (!$this->userPrompter->promptForPlayerToDrawCard()) {
-				$player->fold();
+				$player->stand();
 				echo $player->showHand() . PHP_EOL;
 				break;
 			}
@@ -92,7 +92,7 @@ class Blackjack
 		echo PHP_EOL . $player->showState() . PHP_EOL;
 	}
 
-	private function processFoldedPlayers(array $players): void
+	private function processStandingPlayers(array $players): void
 	{
 		foreach ($players as $player) {
 			$topPlayer ??= $player;
@@ -103,7 +103,7 @@ class Blackjack
 
 		echo <<<OUTPUT
 
-		Of all players that folded, {$topPlayer->getName()} got closest to 21,
+		Of all players that chose to stand, {$topPlayer->getName()} got closest to 21,
 		{$topPlayer->showHand()}
 		
 		OUTPUT;

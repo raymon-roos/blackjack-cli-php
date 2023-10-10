@@ -44,12 +44,12 @@ final class PlayerTest extends MockeryTestCase
 		);
 	}
 
-	public function testCanFold(): void
+	public function testCanStand(): void
 	{
 		$player = new Player('Grace Murray Hopper');
-		$player->fold();
+		$player->stand();
 
-		$this->assertEquals('Grace Murray Hopper has folded', $player->showState());
+		$this->assertEquals('Grace Murray Hopper stands', $player->showState());
 	}
 
 	public function testHasName(): void

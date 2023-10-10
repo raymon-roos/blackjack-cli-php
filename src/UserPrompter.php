@@ -32,16 +32,16 @@ class UserPrompter
 		$prompt = <<<PROMPT
 
 			Do you want to draw another card?
-			Type "y(es)" to draw another card, n(o) or leave empty to quit
+			Type "h(it)/y(es)" to draw another card, s(tand)/n(o) or leave empty to end your turn
 			>
 			PROMPT;
 
 		while ($input = readline($prompt)) {
-			if ($this->inputMatchesKeywords($input, ['n', 'no'])) {
+			if ($this->inputMatchesKeywords($input, ['s', 'stand', 'n', 'no'])) {
 				return false;
 			}
 
-			if ($this->inputMatchesKeywords($input, ['y', 'yes'])) {
+			if ($this->inputMatchesKeywords($input, ['h', 'hit', 'y', 'yes'])) {
 				return true;
 			}
 		}

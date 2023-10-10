@@ -44,9 +44,9 @@ class Player
 		return $this->score;
 	}
 
-	public function fold(): void
+	public function stand(): void
 	{
-		$this->state = EndState::folded;
+		$this->state = EndState::stands;
 	}
 
 	public function showState(): ?string
