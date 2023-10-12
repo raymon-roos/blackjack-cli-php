@@ -8,13 +8,13 @@ class UserPrompter
 {
 	public function promptForPlayerName(): ?string
 	{
-		$prompt = <<<prompt
+		$prompt = <<<PROMPT
 
 			Type "r(eady)" or leave empty to start the game
 
 			Please enter your name
 			>
-			prompt;
+			PROMPT;
 
         $input = readline($prompt);
 
