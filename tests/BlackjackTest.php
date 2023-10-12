@@ -23,7 +23,7 @@ final class BlackjackTest extends MockeryTestCase
 		new Blackjack(players: []);
 	}
 
-	public function testPlayerscanStand(): void
+	public function testPlayersCanStand(): void
 	{
 		$mockPrompter = Mockery::mock('App\UserPrompter');
 		$mockPrompter->shouldReceive([
