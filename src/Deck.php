@@ -4,34 +4,41 @@ declare(strict_types=1);
 
 namespace App;
 
+use Generator;
 use RangeException;
 
 class Deck
 {
-	/**
-	 * @property Card[] $cards
-	 */
-	private array $cards = [];
+	private readonly Generator $cards;
 
 	public function __construct()
+   	{
+		$this->cards = $this->generateCards();
+	}
+
+	private function generateCards(): Generator
 	{
-		foreach (Suit::cases() as $suit) {
-			foreach (Rank::cases() as $rank) {
-				$this->cards[] = new Card($suit, $rank);
-			}
+		$suits = Suit::cases();
+		$ranks = Rank::cases();
+
+		for ($i = 0; $i < 8; $i++) {
+            shuffle($suits);
+            shuffle($ranks);
+
+            foreach ($suits as $suit) {
+                foreach ($ranks as $rank) {
+                    yield new Card($suit, $rank);
+                }
+            } 
 		}
 	}
 
 	public function drawCard(): Card
-	{
-		if (empty($this->cards)) {
-			throw new RangeException('All out of cards');
-		}
+   	{
+		$card = $this->cards->current();
+		$this->cards->next();
 
-		$index = array_rand($this->cards);
-		$card = $this->cards[$index];
-		unset($this->cards[$index]);
-
-		return $card;
+		return $card 
+			?? throw new RangeException('All out of cards');
 	}
 }

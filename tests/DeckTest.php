@@ -6,11 +6,12 @@ namespace Tests;
 
 use App\Deck;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use PHPUnit\Framework\Attributes\Depends;
 use RangeException;
 
 final class DeckTest extends MockeryTestCase
 {
-	public function testDeals52UniqueCardsThenThrows(): void
+	public function testThrowsOnEmptyDeck(): int
 	{
 		$deck = new Deck();
 
@@ -18,22 +19,17 @@ final class DeckTest extends MockeryTestCase
 			new RangeException('All out of cards')
 		);
 
-		$cards = [];
-		while (true) {
-			$nextCard = $deck->drawCard();
+		$count = 0;
+        while ($deck->drawCard()) {
+            $count++;
+        }
 
-			foreach ($cards as $previousCard) {
-				if ($previousCard == $nextCard) {
-					$this->fail('Cards are not unique');
-				}
-			}
+		return $count;
+	}
 
-			$cards[] = $nextCard;
-		};
-
-		$this->assertSame(
-			52,
-			count($cards)
-		);
+	#[Depends('testThrowsOnEmptyDeck')]
+	public function testHas8DecksWorthOfCards(int $count): void
+	{
+		$this->assertSame(8 * 52, $count);
 	}
 }
