@@ -28,8 +28,8 @@ final class DeckTest extends MockeryTestCase
 	}
 
 	#[Depends('testThrowsOnEmptyDeck')]
-	public function testHas8DecksWorthOfCards(int $count): void
+	public function testHas8DecksWorthOfCards(?int $count): void
 	{
-		$this->assertSame(8 * 52, $count);
+		$this->assertSame(8 * 52, $count ?? $this->testThrowsOnEmptyDeck());
 	}
 }
