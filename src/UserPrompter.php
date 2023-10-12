@@ -9,7 +9,6 @@ class UserPrompter
 	public function promptForPlayerName(): ?string
 	{
 		$prompt = <<<PROMPT
-
 			Type "r(eady)" or leave empty to start the game
 
 			Please enter your name
@@ -28,7 +27,6 @@ class UserPrompter
 	public function promptForPlayerToDrawCard(): bool
 	{
 		$prompt = <<<PROMPT
-
 			Do you want to draw another card?
 			Type "h(it)/y(es)" to draw another card, s(tand)/n(o) or leave empty to end your turn
 			>
