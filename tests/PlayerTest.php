@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use App\Player;
+use InvalidArgumentException;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -25,6 +26,15 @@ final class PlayerTest extends MockeryTestCase
 		}
 
 		return $player;
+	}
+
+	public function testThrowsOnEmptyName(): void
+    {
+			$this->expectExceptionObject(
+				new InvalidArgumentException('Player name is required')
+			);
+
+			new Player('');
 	}
 
 	public function testCanCalculateHandScore(): void

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use InvalidArgumentException;
+
 class Player
 {
 	private array $hand = [];
@@ -11,9 +13,12 @@ class Player
 	private ?EndState $state;
 	private bool $isFinished = false;
 
-	public function __construct(public readonly string $name)
-	{
-	}
+    public function __construct(public readonly string $name)
+    {
+		if (empty($name)) {
+			throw new InvalidArgumentException('Player name is required');
+        }
+    }
 
 	public function addCard(Card $card): void
 	{

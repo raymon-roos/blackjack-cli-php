@@ -31,14 +31,21 @@ class Blackjack
 
 	private function addPlayers(): ?array
 	{
-		echo 'Welcome!' . PHP_EOL;
+		echo 'Welcome to blackjack!' . PHP_EOL 
+		. 'Up to 7 players are allowed to participate' . PHP_EOL;
 
-		$playerNames = $this->userPrompter->promptForPlayerNames();
+        while (
+            count($players ??= []) < 7 
+			&& $playerName = $this->userPrompter->promptForPlayerName()
+        ) {
+			try {
+                $players[] = new Player(trim($playerName));
+            } catch (\Throwable) {
+				echo 'A name is required, please try again' . PHP_EOL;
+            }
+        }
 
-		return array_map(
-			fn (string $playerName) => new Player(trim($playerName)),
-			$playerNames
-		);
+		return $players;
 	}
 
 	public function playGame(): void

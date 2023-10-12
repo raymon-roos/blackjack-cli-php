@@ -6,7 +6,7 @@ namespace App;
 
 class UserPrompter
 {
-	public function promptForPlayerNames(): ?array
+	public function promptForPlayerName(): ?string
 	{
 		$prompt = <<<prompt
 
@@ -16,15 +16,13 @@ class UserPrompter
 			>
 			prompt;
 
-		while ($input = readline($prompt)) {
-			if (empty($input) || $this->inputMatchesKeywords($input, ['r', 'ready'])) {
-				break;
-			}
+        $input = readline($prompt);
 
-			$result[] = $input;
-		}
+        if (empty($input) || $this->matchesKeywords($input, ['r', 'ready'])) {
+			return null;
+        }
 
-		return $result ?? null;
+		return $input;
 	}
 
 	public function promptForPlayerToDrawCard(): bool
@@ -37,11 +35,11 @@ class UserPrompter
 			PROMPT;
 
 		while ($input = readline($prompt)) {
-			if ($this->inputMatchesKeywords($input, ['s', 'stand', 'n', 'no'])) {
+			if ($this->matchesKeywords($input, ['s', 'stand', 'n', 'no'])) {
 				return false;
 			}
 
-			if ($this->inputMatchesKeywords($input, ['h', 'hit', 'y', 'yes'])) {
+			if ($this->matchesKeywords($input, ['h', 'hit', 'y', 'yes'])) {
 				return true;
 			}
 		}
@@ -49,7 +47,7 @@ class UserPrompter
 		return false;
 	}
 
-	private function inputMatchesKeywords(string $input, array $keywords): bool
+	private function matchesKeywords(string $input, array $keywords): bool
 	{
 		return in_array(strtolower(trim($input)), $keywords);
 	}
