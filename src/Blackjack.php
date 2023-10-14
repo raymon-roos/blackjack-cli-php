@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use InvalidArgumentException;
-
 class Blackjack
 {
 	/**
@@ -14,33 +12,37 @@ class Blackjack
 	private array $players;
 
 	/**
-	 * @param Deck $deck
-	 * @param Player[] $players
+	 * @param null|Player[] $players
 	 */
-	public function __construct(
-		private Deck $deck = new Deck(),
-		?array $players = null,
-		private UserPrompter $userPrompter = new UserPrompter(),
-	) {
-		$this->players = $players ?? $this->addPlayers();
+    public function __construct(
+        ?array $players = null,
+        private Dealer $dealer = new Dealer(),
+        private UserPrompter $userPrompter = new UserPrompter(),
+    ) {
+		$players = array_values(array_filter(
+            $players ??= $this->addPlayers(),
+            fn ($input) => $input instanceof Player
+        ));
 
-		if (empty($this->players)) {
-			throw new InvalidArgumentException('No players given');
-		}
-	}
+        if (empty($players)) {
+			throw new \InvalidArgumentException('No players given');
+        }
+
+		$this->players = [$this->dealer, ...$players];
+    }
 
 	private function addPlayers(): ?array
 	{
-		echo 'Welcome to blackjack!' . PHP_EOL 
+		echo 'Welcome to blackjack!' . PHP_EOL
 		. 'Up to 7 players are allowed to participate' . PHP_EOL;
 
         while (
-            count($players ??= []) < 7 
+            count($players ??= []) < 7
 			&& $playerName = $this->userPrompter->promptForPlayerName()
         ) {
 			try {
                 $players[] = new Player(trim($playerName));
-            } catch (\Throwable) {
+            } catch (\InvalidArgumentException) {
 				echo 'A name is required, please try again' . PHP_EOL;
             }
         }
@@ -50,69 +52,80 @@ class Blackjack
 
 	public function playGame(): void
 	{
-		$this->dealFirstHand();
+		echo 'Starting the game now' . PHP_EOL;
 
-		foreach ($this->players as $player) {
-			if (!$player->isFinished()) {
+        $this->dealFirstHand();
+
+		while (
+			!$this->dealer->isFinished()
+        ) {
+            foreach ($this->players as $player) {
+				if ($player->isFinished()) {
+					continue;
+				}
+
 				$this->processPlayerTurn($player);
-			}
-		}
 
-		$standingPlayers = array_filter(
-			$this->players,
-			fn (Player $player) => $player->showState() === 'stands'
-		);
-
-		// If more than one player stands, find
-		// the player with a score closest to 21
-		if (count($standingPlayers) >= 2) {
-			$this->processStandingPlayers($standingPlayers);
+				if ($this->dealer->getState() === EndState::busted) {
+					break;
+				}
+            }
         }
+
+		$this->showScores();
     }
 
 	private function dealFirstHand(): void
 	{
 		foreach ($this->players as $player) {
-			$player->addCard($this->deck->drawCard());
-			$player->addCard($this->deck->drawCard());
+			$this->dealer->deal($player);
+			$this->dealer->deal($player);
 			echo $player->showHand() . PHP_EOL;
-			echo PHP_EOL . $player->showState() . PHP_EOL;
 		}
 	}
 
 	private function processPlayerTurn(Player $player): void
 	{
 		echo PHP_EOL . "Your turn {$player->name}" . PHP_EOL;
+		echo 'Currently, ' . $player->showHand() . PHP_EOL;
+
+		match (true) {
+			$player instanceof Dealer,
+			$this->userPrompter->promptForPlayerToDrawCard() => $this->dealer->deal($player),
+			default => $player->stand()
+		};
+
 		echo $player->showHand() . PHP_EOL;
-
-		while (!$player->isFinished()) {
-			if (!$this->userPrompter->promptForPlayerToDrawCard()) {
-				$player->stand();
-				echo $player->showHand() . PHP_EOL;
-				break;
-			}
-
-			$player->addCard($this->deck->drawCard());
-			echo $player->showHand() . PHP_EOL;
-		}
-
-		echo PHP_EOL . $player->showState() . PHP_EOL;
 	}
 
-	private function processStandingPlayers(array $players): void
+	private function showScores(): void
 	{
-		foreach ($players as $player) {
-			$topPlayer ??= $player;
-			if ($player->getHandScore() > $topPlayer->getHandScore()) {
-				$topPlayer = $player;
+		echo PHP_EOL . 'Final scores:' . PHP_EOL;
+
+		$dealerScore = $this->dealer->getHandScore();
+		$dealerState = $this->dealer->getState();
+
+		if ($dealerState === EndState::busted) {
+			echo 'Dealer lost, all players win!' . PHP_EOL;
+			return;
+        }
+
+		array_shift($this->players);
+
+		foreach ($this->players as $player) {
+			if ($player->isFinished()) {
+                echo $player->showState() . PHP_EOL;
+                continue;
 			}
+
+			$playerScore = $player->getHandScore();
+
+			$pointsDifference = $dealerScore - $playerScore;
+			echo match (true) {
+				$pointsDifference > 0 => "$player->name lost by by $pointsDifference points",
+				$pointsDifference === 0 => "$player->name is at a standoff",
+				$pointsDifference < 0 => "$player->name won by by " . abs($pointsDifference) . ' points',
+			} . PHP_EOL;
 		}
-
-		echo <<<OUTPUT
-
-		Of all players that chose to stand, {$topPlayer->name} got closest to 21,
-		{$topPlayer->showHand()}
-		
-		OUTPUT;
 	}
 }
