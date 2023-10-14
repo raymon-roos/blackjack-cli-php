@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\EndState;
 use App\Player;
 use InvalidArgumentException;
 use Mockery;
@@ -30,11 +31,11 @@ final class PlayerTest extends MockeryTestCase
 
 	public function testThrowsOnEmptyName(): void
     {
-			$this->expectExceptionObject(
-				new InvalidArgumentException('Player name is required')
-			);
+		$this->expectExceptionObject(
+			new InvalidArgumentException('Player name is required')
+		);
 
-			new Player('');
+		new Player('');
 	}
 
 	public function testCanCalculateHandScore(): void
@@ -49,7 +50,7 @@ final class PlayerTest extends MockeryTestCase
 		$player = $this->getPlayerWith3Quens();
 
 		$this->assertEquals(
-			'Ada Lovelace has ♥ Q ♥ Q ♥ Q (30)',
+			'Ada Lovelace has ♥ Q ♥ Q ♥ Q (30), Ada Lovelace is Busted!',
 			$player->showHand()
 		);
 	}
@@ -67,5 +68,12 @@ final class PlayerTest extends MockeryTestCase
 		$player = new Player('Radia Perlman');
 
 		$this->assertEquals('Radia Perlman', $player->name);
+	}
+	
+	public function testCanReturnState(): void
+	{
+		$player = $this->getPlayerWith3Quens();
+
+		$this->assertEquals(EndState::busted, $player->getState());
 	}
 }

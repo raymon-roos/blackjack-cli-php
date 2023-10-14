@@ -8,10 +8,9 @@ use InvalidArgumentException;
 
 class Player
 {
-	private array $hand = [];
-	private int $score = 0;
-	private ?EndState $state;
-	private bool $isFinished = false;
+	protected array $hand = [];
+	protected int $score = 0;
+	protected ?EndState $state = null;
 
     public function __construct(public readonly string $name)
     {
@@ -25,18 +24,21 @@ class Player
 		$this->hand[] = $card;
 		$this->score += $card->getScore();
 		$this->state = EndState::tryFromHandScore($this->score, count($this->hand));
-		$this->isFinished = !is_null($this->state);
 	}
 
 	public function showHand(): string
 	{
 		$output = "{$this->name} has";
-
 		foreach ($this->hand as $card) {
 			$output = "$output {$card->show()}";
 		}
+		$output = "$output ({$this->score})";
 
-		return "$output ({$this->score})";
+		if ($this->isFinished()) {
+			$output = "$output, {$this->showState()}";
+		}
+
+		return $output;
 	}
 
 	public function getHandScore(): int
@@ -49,6 +51,11 @@ class Player
 		$this->state = EndState::stands;
 	}
 
+    public function getState(): ?EndState
+    {
+		return $this->state;
+    }
+
 	public function showState(): ?string
 	{
 		if (!is_null($this->state)) {
@@ -60,6 +67,6 @@ class Player
 
 	public function isFinished(): bool
 	{
-		return $this->isFinished;
+		return $this->state instanceof EndState;
 	}
 }
