@@ -56,9 +56,7 @@ class Blackjack
 
         $this->dealFirstHand();
 
-		while (
-			!$this->dealer->isFinished()
-        ) {
+		while (!$this->dealer->isFinished()) {
             foreach ($this->players as $player) {
 				if ($player->isFinished()) {
 					continue;
@@ -102,15 +100,12 @@ class Blackjack
 	{
 		echo PHP_EOL . 'Final scores:' . PHP_EOL;
 
-		$dealerScore = $this->dealer->getHandScore();
-		$dealerState = $this->dealer->getState();
+		$dealer = array_shift($this->players);
 
-		if ($dealerState === EndState::busted) {
+		if ($dealer->getState() === EndState::busted) {
 			echo 'Dealer lost, all players win!' . PHP_EOL;
 			return;
         }
-
-		array_shift($this->players);
 
 		foreach ($this->players as $player) {
 			if ($player->isFinished()) {
@@ -118,9 +113,8 @@ class Blackjack
                 continue;
 			}
 
-			$playerScore = $player->getHandScore();
+			$pointsDifference = $dealer->getHandScore() - $player->getHandScore();
 
-			$pointsDifference = $dealerScore - $playerScore;
 			echo match (true) {
 				$pointsDifference > 0 => "$player->name lost by by $pointsDifference points",
 				$pointsDifference === 0 => "$player->name is at a standoff",
