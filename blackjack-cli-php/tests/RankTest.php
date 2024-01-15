@@ -7,12 +7,12 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class RankTest extends MockeryTestCase
 {
-	public function testValuesAreCorrect()
-	{
-		foreach (Rank::cases() as $rank) {
-			$totalValue = ($totalValue ??= 0) + $rank->getWorth();
-		}
+    public function testValuesAreCorrect()
+    {
+        foreach (Rank::cases() as $rank) {
+            $totalValue = ($totalValue ??= 0) + $rank->getWorth();
+        }
 
-		$this->assertEquals(95, $totalValue);
-	}
+        $this->assertEquals(95, $totalValue);
+    }
 }

@@ -9,19 +9,19 @@ use RangeException;
 
 class Deck
 {
-	private readonly Generator $cards;
+    private readonly Generator $cards;
 
-	public function __construct()
-   	{
-		$this->cards = $this->generateCards();
-	}
+    public function __construct()
+       {
+        $this->cards = $this->generateCards();
+    }
 
-	private function generateCards(): Generator
-	{
-		$suits = Suit::cases();
-		$ranks = Rank::cases();
+    private function generateCards(): Generator
+    {
+        $suits = Suit::cases();
+        $ranks = Rank::cases();
 
-		for ($i = 0; $i < 8; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             shuffle($suits);
             shuffle($ranks);
 
@@ -30,15 +30,15 @@ class Deck
                     yield new Card($suit, $rank);
                 }
             } 
-		}
-	}
+        }
+    }
 
-	public function drawCard(): Card
-   	{
-		$card = $this->cards->current();
-		$this->cards->next();
+    public function drawCard(): Card
+       {
+        $card = $this->cards->current();
+        $this->cards->next();
 
-		return $card 
-			?? throw new RangeException('All out of cards');
-	}
+        return $card 
+            ?? throw new RangeException('All out of cards');
+    }
 }

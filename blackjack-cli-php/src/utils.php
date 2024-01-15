@@ -7,18 +7,18 @@ declare(strict_types=1);
  */
 function dd(...$args): void
 {
-	$print = function ($arg): void {
-		if (PHP_SAPI === 'cli') {
-			var_dump($arg);
-			return;
-		}
+    $print = function ($arg): void {
+        if (PHP_SAPI === 'cli') {
+            var_dump($arg);
+            return;
+        }
 
-		echo '<pre style="font-size: 13pt; background-color: gray; color: darkblue;">';
-		var_dump($arg);
-		echo '</pre>';
-	};
+        echo '<pre style="font-size: 13pt; background-color: gray; color: darkblue;">';
+        var_dump($arg);
+        echo '</pre>';
+    };
 
-	array_walk($args, $print);
+    array_walk($args, $print);
 
-	exit();
+    exit();
 }

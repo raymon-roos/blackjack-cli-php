@@ -14,42 +14,42 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 final class DealerTest extends MockeryTestCase
 {
-	public function testIsNamedDealer(): void
+    public function testIsNamedDealer(): void
     {
-		$dealer = new Dealer();
+        $dealer = new Dealer();
 
-		$this->assertEquals('dealer', $dealer->name);
-	}
-
-	public function testCanDeal(): void
-    {
-		$spyPlayer = Mockery::spy('App\Player');
-
-		$mockDeck = Mockery::mock('App\Deck');
-		$mockDeck->shouldReceive([
-			'drawCard' => $card = new Card(Suit::spades, Rank::ace)
-		]);
-
-		$dealer = new Dealer(deck: $mockDeck);
-
-		$dealer->deal($spyPlayer);
-
-		$spyPlayer->shouldHaveReceived('addCard', [$card]);
+        $this->assertEquals('dealer', $dealer->name);
     }
 
-	public function testDealerStandsAt17Points(): void
-   	{
-		$mockCard = Mockery::mock('App\Card');
-		$mockCard->shouldReceive(['getScore' => 17]);
+    public function testCanDeal(): void
+    {
+        $spyPlayer = Mockery::spy('App\Player');
 
-		$mockDeck = Mockery::mock('App\Deck');
-		$mockDeck->shouldReceive('drawCard')
-			->andReturn($mockCard);
+        $mockDeck = Mockery::mock('App\Deck');
+        $mockDeck->shouldReceive([
+            'drawCard' => $card = new Card(Suit::spades, Rank::ace)
+        ]);
 
-		$dealer = new Dealer(deck: $mockDeck);
+        $dealer = new Dealer(deck: $mockDeck);
 
-		$dealer->deal($dealer);
+        $dealer->deal($spyPlayer);
 
-		$this->assertEquals(EndState::stands, $dealer->getState());
-	}
+        $spyPlayer->shouldHaveReceived('addCard', [$card]);
+    }
+
+    public function testDealerStandsAt17Points(): void
+       {
+        $mockCard = Mockery::mock('App\Card');
+        $mockCard->shouldReceive(['getScore' => 17]);
+
+        $mockDeck = Mockery::mock('App\Deck');
+        $mockDeck->shouldReceive('drawCard')
+            ->andReturn($mockCard);
+
+        $dealer = new Dealer(deck: $mockDeck);
+
+        $dealer->deal($dealer);
+
+        $this->assertEquals(EndState::stands, $dealer->getState());
+    }
 }

@@ -6,47 +6,47 @@ namespace App;
 
 class UserPrompter
 {
-	public function promptForPlayerName(): ?string
-	{
-		$prompt = <<<PROMPT
-			Type "r(eady)" or leave empty to start the game
+    public function promptForPlayerName(): ?string
+    {
+        $prompt = <<<PROMPT
+            Type "r(eady)" or leave empty to start the game
 
-			Please enter your name
-			>
-			PROMPT;
+            Please enter your name
+            >
+            PROMPT;
 
         $input = readline($prompt);
 
         if (empty($input) || $this->matchesKeywords($input, ['r', 'ready'])) {
-			return null;
+            return null;
         }
 
-		return $input;
-	}
+        return $input;
+    }
 
-	public function promptForPlayerToDrawCard(): bool
-	{
-		$prompt = <<<PROMPT
-			Do you want to draw another card?
-			Type "h(it)/y(es)" to draw another card, s(tand)/n(o) or leave empty to end your turn
-			>
-			PROMPT;
+    public function promptForPlayerToDrawCard(): bool
+    {
+        $prompt = <<<PROMPT
+            Do you want to draw another card?
+            Type "h(it)/y(es)" to draw another card, s(tand)/n(o) or leave empty to end your turn
+            >
+            PROMPT;
 
-		while ($input = readline($prompt)) {
-			if ($this->matchesKeywords($input, ['s', 'stand', 'n', 'no'])) {
-				return false;
-			}
+        while ($input = readline($prompt)) {
+            if ($this->matchesKeywords($input, ['s', 'stand', 'n', 'no'])) {
+                return false;
+            }
 
-			if ($this->matchesKeywords($input, ['h', 'hit', 'y', 'yes'])) {
-				return true;
-			}
-		}
+            if ($this->matchesKeywords($input, ['h', 'hit', 'y', 'yes'])) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private function matchesKeywords(string $input, array $keywords): bool
-	{
-		return in_array(strtolower(trim($input)), $keywords);
-	}
+    private function matchesKeywords(string $input, array $keywords): bool
+    {
+        return in_array(strtolower(trim($input)), $keywords);
+    }
 }
